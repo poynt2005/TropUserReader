@@ -57,10 +57,30 @@ public class datParser {
 		Files.write(Paths.get("TROPUSR.DAT_Mod"), outputData); //write new .dat file
 	}
 	
+	public void unlockTrophy(int[] trophyId , Boolean unLockAll , String dirPath) throws IOException{ //unlock specific trophy (add directory path param)
+		byte[] outputData = datFile.getFileData();
+		
+		if(!unLockAll)
+			for(int i = 0 ; i<trophyId.length ; i++)
+				outputData[trophyLockPos[trophyId[i]]] = 1;
+		else
+			for(int i = 0 ; i<trophyLockPos.length ; i++)
+				outputData[trophyLockPos[i]] = 1;
+		
+		Files.write(Paths.get(dirPath , "/TROPUSR.DAT_Mod"), outputData); //write new .dat file
+	}
+	
 	public Boolean[] getTrophySituation(){
 		return trophySituation;
 	}
 	public int[] gettrophyLockPos(){
 		return trophyLockPos;
+	}
+	public int getUnlockedTrophies(){ //return how many trophoes have unlocked
+		int count = 0;
+		for(int i = 0 ; i<trophySituation.length; i++)
+			if(trophySituation[i] == true)
+				count++;
+		return count;
 	}
 }

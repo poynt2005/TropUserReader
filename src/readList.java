@@ -7,7 +7,9 @@ public class readList {
 	private String fileName;
 	private int trophyCounts;
 	private String[] trophyNames;
-
+	private String gameTitle;
+	private String gameId;
+	
 	public readList() {
 		System.out.println("No input files!");
 	}
@@ -42,6 +44,23 @@ public class readList {
 					trophyNames[i] = trophyNameNode.getTextContent(); //record the trophy name
 			}
 		}
+		
+		//get game title and game id
+		
+		NodeList gameName = doc.getElementsByTagName("title-name");
+		
+		for (int i = 0; i < gameName.getLength(); i++) {
+			Node currentNode = gameName.item(i);
+			gameTitle = currentNode.getTextContent();
+		}
+		
+		NodeList npcommid = doc.getElementsByTagName("npcommid");
+		
+		for (int i = 0; i < npcommid.getLength(); i++) {
+			Node currentNode = npcommid.item(i);
+			gameId = currentNode.getTextContent();
+		}
+		
 	}
 
 	public int getTrophyCounts() {
@@ -51,4 +70,14 @@ public class readList {
 	public String[] gettrophyNames() {
 		return this.trophyNames;
 	}
+	
+	public String getGameName(){
+		return this.gameTitle;
+	}
+	
+	public String getGameId(){
+		return this.gameId;
+	}
+	
+
 }
